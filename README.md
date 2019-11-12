@@ -14,3 +14,15 @@ its funny, because tpacpi-bat does everything i dont want and the single thing i
 maybe i'll fork the program and write an extension, but for now the shellscripts will have to work.
 ### cron
 i plan to use cron to run my watchdog-script for the battery-percentage so i recommend to have it installed as well.
+### bash
+well... you should have it already - if you dont have it chances are you have plenty of diffenent problems
+## installation
+### cloning this repo
+just clone it...
+### adding a cronjob
+open the crontab with sudo crontab -e.
+add the following line
+*/1 * * * * /bin/bash -c "/$pathtotherepo/autoswitch.sh"
+obviously you should change the path to the script.
+when you add that line, the script will run every minute, on the minute, so give it a little time to change the state.
+
