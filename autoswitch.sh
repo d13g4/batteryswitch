@@ -10,7 +10,7 @@ percentagefactor=100
 percentagea=$(echo "$factora*$percentagefactor" | bc)
 #convert value to integer
 percentagea=${percentagea%.*}
-twenty="20"
+twenty="25" #25 is the new twenty
 fullb=$(cat /sys/class/power_supply/BAT0/energy_full)
 #get the current-value
 currentb=$(cat /sys/class/power_supply/BAT0/energy_now)
@@ -28,14 +28,15 @@ zzero="0"
 if [ $isac = $zzero ]
 then
 #check if battery a (external) is <= twenty percent
-    if [ "$percentagea" -le "$twenty" ] 
+    if [ "$percentagea" -le "$twenty" ] #is now 25
     then
+	sudo tpacpi-bat -s FD 2 0 # make sure external isnt forced
 	sudo tpacpi-bat -s FD 1 1 # force internal
     fi
 #check if internal is <= 20, too and swich back to external 
-    if [ "$percentageb" -le "$twenty" ]
+    if [ "$percentageb" -le "$twenty" ] #is now 25
     then
-	sudo tpacpi-bat -s FD 1 0
+	sudo tpacpi-bat -s FD 1 0 
 	sudo tpacpi-bat -s FD 2 1
     fi
 fi
