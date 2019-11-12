@@ -46,12 +46,33 @@ then
 	sudo tpacpi-bat -s FD 1 0 # make sure internal isnt forced
 	sudo tpacpi-bat -s FD 2 1 # force external
     fi
-#check if internal is <= $1 and let them drain the rest together
+#check if internal is <= $1 and let the external drain again
     if [ "$percentageb" -le "$1" ]
     then
 	sudo tpacpi-bat -s FD 1 0 
 	sudo tpacpi-bat -s FD 2 1
     fi
+#### second stage - draining further
+
+#check if battery a (external) is <= $2
+    if [ "$percentagea" -le "$2" ]
+    then
+	sudo tpacpi-bat -s FD 2 0 # make sure external isnt forced
+	sudo tpacpi-bat -s FD 1 1 # force internal
+    fi
+#if it isnt, unforce internal and force external instead
+    if [ "$percentagea" -ge "$2" ]
+    then
+	sudo tpacpi-bat -s FD 1 0 # make sure internal isnt forced
+	sudo tpacpi-bat -s FD 2 1 # force external
+    fi
+#check if internal is <= $2 and let the external drain again
+    if [ "$percentageb" -le "$2" ]
+    then
+	sudo tpacpi-bat -s FD 1 0 
+	sudo tpacpi-bat -s FD 2 1
+    fi
+
 fi
 #check if ac is on, and let them charge again
 if [ "$isac" = "$one" ]
