@@ -25,4 +25,8 @@ add the following line
 */1 * * * * /bin/bash -c "/$pathtotherepo/autoswitch.sh"
 obviously you should change the path to the script.
 when you add that line, the script will run every minute, on the minute, so give it a little time to change the state.
-
+### autoswitchv2.sh
+there is a newer version called autoswitchv2.sh, you can get it working by adding tho following line to the crontab:
+*/1 * * * * /bin/bash -c "/$pathtotherepo/autoswitchv2.sh $yourthreshold"
+as you can see, you can set your own threshold now.
+it has to be an integer, so a natural number. oh - and its in percent, so it makes only sense to use numbers 0 < $1 < 100. but...you can do whatever you like, its just a suggestion.
