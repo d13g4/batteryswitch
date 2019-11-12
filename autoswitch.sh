@@ -11,9 +11,9 @@ percentagea=$(echo "$factora*$percentagefactor" | bc)
 #convert value to integer
 percentagea=${percentagea%.*}
 twenty="20"
-fullb=$(cat /sys/class/power_supply/BAT1/energy_full)
+fullb=$(cat /sys/class/power_supply/BAT0/energy_full)
 #get the current-value
-currentb=$(cat /sys/class/power_supply/BAT1/energy_now)
+currentb=$(cat /sys/class/power_supply/BAT0/energy_now)
 #use bc to divise them
 factorb=$(echo "scale=2; $currentb/$fullb" | bc)
 #convert it to percentage to be able to get an integer again
