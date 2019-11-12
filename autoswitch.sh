@@ -20,24 +20,26 @@ factorb=$(echo "scale=2; $currentb/$fullb" | bc)
 percentageb=$(echo "$factorb*$percentagefactor" | bc)
 #convert value to integer
 percentageb=${percentageb%.*}
-
 #check if notebook is on ac
 isac=$(cat /sys/class/power_supply/AC/online)
+#i still dont speak bash
 one="1"
 zzero="0"
 if [ $isac = $zzero ]
 then
+#check if battery a (external) is <= twenty percent
     if [ "$percentagea" -le "$twenty" ] 
     then
-	sudo tpacpi-bat -s FD 1 1
+	sudo tpacpi-bat -s FD 1 1 # force internal
     fi
-
+#check if internal is <= 20, too and swich back to external 
     if [ "$percentageb" -le "$twenty" ]
     then
 	sudo tpacpi-bat -s FD 1 0
 	sudo tpacpi-bat -s FD 2 1
     fi
 fi
+#check if ac is on, and let them charge again
 if [ "$isac" = "$one" ]
 then
     sudo tpacpi-bat -s FD 1 0
