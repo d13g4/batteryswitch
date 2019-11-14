@@ -1,6 +1,15 @@
 # batteryswitch
 small hacked script to switch discharging batterys on tinkpads running linux
 
+
+
+
+# TODO
+* getting state from tpacpi-bat to reduce writings every minute - Done!
+
+
+
+
 ## problem-description
 i have two batterys in my a275 and the external battery has to be completely dead before my notebook switches to the internal.
 obviously thats not very good for batterylife, so i decided to want them to switch before running completely empty.
