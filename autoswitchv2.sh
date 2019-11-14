@@ -37,6 +37,18 @@ isIntFD=$(echo "$(sudo tpacpi-bat -g FD 1 )")
 isExtFD=$(echo "$(sudo tpacpi-bat -g FD 2 )")   
 
 ####begin the "logic-part"####
+#check if ac is on, and let them charge again
+if [ "$isac" = "$one" ]
+then
+    if [[ "$isIntFD" == "$yes" ]];
+    then
+	sudo tpacpi-bat -s FD 1 0
+    fi
+    if [[ "$isExtFD" == "$yes" ]];
+    then
+	sudo tpacpi-bat -s FD 2 0
+    fi
+fi
 if [ $isac = $zzero ]
 then
 #check if battery a (external) is <= $1
@@ -58,9 +70,4 @@ then
 	sudo tpacpi-bat -s FD 2 1
     fi
 fi
-#check if ac is on, and let them charge again
-if [ "$isac" = "$one" ]
-then
-    sudo tpacpi-bat -s FD 1 0
-    sudo tpacpi-bat -s FD 2 0
-fi
+
