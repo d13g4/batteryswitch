@@ -1,5 +1,6 @@
 ####variables####
 percentagefactor=100
+threshold="20"
 threshold=$1 #set first command-line argument as threshold
 zzero="0"
 one="1"
@@ -54,7 +55,7 @@ fi
 if [ $isac = $zzero ]
 then
 #check if external battery is <= $1
-    if [ "$percentage_ext" -le "$1" ]
+    if [ "$percentage_ext" -le "$threshold" ]
     then
 	if [[ "$isExtFD" == "$yes" ]]; # make sure external isnt forced
 	then
@@ -65,7 +66,7 @@ then
 	isIntFD=$(echo "$(sudo tpacpi-bat -g FD 1 )")                            
     fi
 #if external >= $1 then 
-    if [ "$percentage_ext" -ge "$1" ]
+    if [ "$percentage_ext" -ge "$threshold" ]
     then
 	if [[ "$isIntFD" == "$yes" ]]; #make sure internal isnt forced
 	then
@@ -79,7 +80,7 @@ then
 	fi
     fi
 #check if internal is <= $1 and let the external drain again
-    if [ "$percentage_int" -le "$1" ]
+    if [ "$percentage_int" -le "$threshold" ]
     then
 	if [[ "$isIntFD" == "$yes" ]];
 	then
