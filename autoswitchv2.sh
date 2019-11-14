@@ -3,7 +3,8 @@ percentagefactor=100
 threshold=$1 #set first command-line argument as threshold
 zzero="0"
 one="1"
-
+no="no"
+yes="yes"
 ####Battery extern####
 ####get the battery-full-value####
 full_ext=$(cat /sys/class/power_supply/BAT1/energy_full)
@@ -30,6 +31,10 @@ percentage_int=${percentage_int%.*}
 
 ####check if notebook is on ac####
 isac=$(cat /sys/class/power_supply/AC/online)
+
+####set variables according to ForceDischarge####
+isIntFD=$(echo "$(sudo tpacpi-bat -g FD 1 )")                            
+isExtFD=$(echo "$(sudo tpacpi-bat -g FD 2 )")   
 
 ####begin the "logic-part"####
 if [ $isac = $zzero ]
