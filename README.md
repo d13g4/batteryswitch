@@ -6,7 +6,7 @@ small hacked script to switch discharging batterys on tinkpads running linux
 
 # TODO
 * getting state from tpacpi-bat to reduce writings every minute - Done!
-
+* Writing a setup.sh
 
 
 
