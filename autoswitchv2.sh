@@ -40,34 +40,57 @@ isExtFD=$(echo "$(sudo tpacpi-bat -g FD 2 )")
 #check if ac is on, and let them charge again
 if [ "$isac" = "$one" ]
 then
-    if [[ "$isIntFD" == "$yes" ]];
+    if [[ "$isIntFD" == "$yes" ]]; ##check if writing is needed
     then
 	sudo tpacpi-bat -s FD 1 0
+	isIntFD=$(echo "$(sudo tpacpi-bat -g FD 1 )")                            
     fi
     if [[ "$isExtFD" == "$yes" ]];
     then
 	sudo tpacpi-bat -s FD 2 0
+	isExtFD=$(echo "$(sudo tpacpi-bat -g FD 2 )")   
     fi
 fi
 if [ $isac = $zzero ]
 then
-#check if battery a (external) is <= $1
+#check if external battery is <= $1
     if [ "$percentage_ext" -le "$1" ]
     then
-	sudo tpacpi-bat -s FD 2 0 # make sure external isnt forced
+	if [[ "$isExtFD" == "$yes" ]]; # make sure external isnt forced
+	then
+	    sudo tpacpi-bat -s FD 2 0 
+	    isExtFD=$(echo "$(sudo tpacpi-bat -g FD 1 )")                            
+	fi
 	sudo tpacpi-bat -s FD 1 1 # force internal
+	isIntFD=$(echo "$(sudo tpacpi-bat -g FD 1 )")                            
     fi
-#if it isnt, unforce internal and force external instead
+#if external >= $1 then 
     if [ "$percentage_ext" -ge "$1" ]
     then
-	sudo tpacpi-bat -s FD 1 0 # make sure internal isnt forced
-	sudo tpacpi-bat -s FD 2 1 # force external
+	if [[ "$isIntFD" == "$yes" ]]; #make sure internal isnt forced
+	then
+	    sudo tpacpi-bat -s FD 1 0
+	    isIntFD=$(echo "$(sudo tpacpi-bat -g FD 1 )")                            
+	fi
+	if [[ "$isExtFD" == "$no" ]];
+	then
+	    sudo tpacpi-bat -s FD 2 1 # force external
+	    isExtFD=$(echo "$(sudo tpacpi-bat -g FD 2 )")
+	fi
     fi
 #check if internal is <= $1 and let the external drain again
     if [ "$percentage_int" -le "$1" ]
     then
-	sudo tpacpi-bat -s FD 1 0 
-	sudo tpacpi-bat -s FD 2 1
+	if [[ "$isIntFD" == "$yes" ]];
+	then
+	    sudo tpacpi-bat -s FD 1 0 	
+	    isIntFD=$(echo "$(sudo tpacpi-bat -g FD 1 )")                            
+	fi
+	if [[ "$isExtFD" == "$no" ]];
+	then
+	    sudo tpacpi-bat -s FD 2 1
+	    isExtFD=$(echo "$(sudo tpacpi-bat -g FD 1 )")                            
+	fi
     fi
 fi
 
