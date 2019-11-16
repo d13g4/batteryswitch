@@ -5,6 +5,7 @@ small hacked script to switch discharging batterys on tinkpads running linux
 
 
 # TODO
+* implementing a counter to discharge external battery every 20th time or so, so that the statistics are still working 
 * getting state from tpacpi-bat to reduce writings every minute - Done!
 * writing a setup.sh - Done!
 
