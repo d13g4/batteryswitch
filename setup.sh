@@ -18,25 +18,63 @@ else
     echo "Exiting..."
     exit 1
 fi
-user=echo "$USER"
-echo "Is your Username $user? (y/n)"
+echo "Is your Username "$USER"? (y/n)"
 read answer
 if [[ $answer == "y" ]];
 then
+    sleep 1
     echo "Nice."
 else
+    sleep 0.5
     echo "Oh..."
+    sleep 0.3
     echo "Error!1!!"
     exit 1
 fi
+directory=/home/$USER/.batteryswitch
 echo "Creating directory '.batteryswitch'."
-bash -c "mkdir ~/.batteryswitch"
+if [ -d "$directory" ]; 
+then
+    sleep 1
+    echo "It seems the Directory already exists."
+    sleep 0.3
+    echo "Skipping."
+else
+    bash -c "mkdir ~/.batteryswitch"
+    sleep 1
+fi
 echo "Copying autoswitch.sh to .batteryswitch"
 bash -c "cp autoswitch.sh ~/.batteryswitch/"
+sleep 1
 echo "Making a crontab entry for the watchscript"
+sleep 0.3
+echo "."
+sleep 0.3
+echo "."
+sleep 0.3
+echo "."
 #write out current crontab
 sudo crontab -l > /tmp/crontab
-echo "*/1 * * * * /bin/bash -c "/home/$user/.batteryswitch/autoswitch.sh $percentage"" >> /tmp/crontab
-sudo crontab /tmp/crontab
-rm /tmp/crontab
-echo "Doné"
+#check if already installed
+entry=$(sudo cat /var/spool/cron/crontabs/root | grep autoswitch)
+if [[ -z "$entry" ]]; ## check if entry is empty
+then
+    echo "*/1 * * * * /bin/bash -c "/home/$USER/.batteryswitch/autoswitch.sh $percentage"" >> /tmp/crontab
+    sudo crontab /tmp/crontab
+    rm /tmp/crontab
+    sleep 1
+    echo "Doné"
+else
+    echo "It seems you already installed this script."
+    sleep 0.5
+    echo "You can edit your crontab and change the Percentage by typing:"
+    sleep 0.5
+    echo "'sudo crontab -e'"
+    sleep 0.5
+    echo "and changing the Number at the end to your desired value."
+    sleep 0.5
+    echo "Good luck!"
+    exit 1
+fi
+
+
