@@ -6,7 +6,7 @@ small hacked script to switch discharging batterys on tinkpads running linux
 
 # TODO
 * getting state from tpacpi-bat to reduce writings every minute - Done!
-* Writing a setup.sh
+* writing a setup.sh - Done!
 
 
 
@@ -29,22 +29,8 @@ well... you should have it already - if you dont have it, chances are you have p
 ## installation
 ### cloning this repo
 just clone it however you like
-### adding a cronjob
-
-open the crontab with sudo crontab -e
-
-add the following line:
-
-*/1 * * * * /bin/bash -c "/$pathtotherepo/autoswitch.sh"
-
-obviously you should change the path to the script.
-
-this version of the script is hardcoded to switch at 25% batterycapacity - i recommend using autoswitchv2!
-when you add that line, the script will run every minute, on the minute, so give it a little time to change the state.
-### autoswitchv2.sh
-there is a newer version called autoswitchv2.sh, you can get it working by adding or replacing the following line to the crontab:
-
-*/1 * * * * /bin/bash -c "/$pathtotherepo/autoswitchv2.sh $yourthreshold"
-
-as you can see, you can set your own threshold now.
-it has to be an integer, so a natural number. oh - and its in percent, so it makes only sense to use numbers 0 < $yourthreshold < 100. but...you can do whatever you like, its just a suggestion.
+### installing tpacpi-bat
+please install tpacpi-bat first - read the instructions for that on their site please.
+### running setup.sh
+i wrote a setup.sh, that should work - just run it with 'bash setup.sh'.
+if it isnt working, please tell me!
