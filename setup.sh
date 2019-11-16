@@ -31,12 +31,12 @@ else
 fi
 echo "Creating directory '.batteryswitch'."
 bash -c "mkdir ~/.batteryswitch"
-echo "Copying autoswitchv2.sh to .batteryswitch"
-bash -c "cp autoswitchv2.sh ~/.batteryswitch/"
+echo "Copying autoswitch.sh to .batteryswitch"
+bash -c "cp autoswitch.sh ~/.batteryswitch/"
 echo "Making a crontab entry for the watchscript"
 #write out current crontab
 sudo crontab -l > /tmp/crontab
-echo "*/1 * * * * /bin/bash -c "/home/$user/.batteryswitch/autoswitchv2.sh $percentage"" >> /tmp/crontab
+echo "*/1 * * * * /bin/bash -c "/home/$user/.batteryswitch/autoswitch.sh $percentage"" >> /tmp/crontab
 sudo crontab /tmp/crontab
 rm /tmp/crontab
 echo "Doné"
