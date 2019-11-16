@@ -15,7 +15,7 @@ then
     echo "Set to $percentage Percent. Thanks."
 else
     echo "Please learn what Percentage means and try again afterwards."
-    echo "Extiting..."
+    echo "Exiting..."
     exit 1
 fi
 user=echo "$USER"
