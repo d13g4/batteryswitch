@@ -59,7 +59,7 @@ sudo crontab -l > /tmp/crontab
 entry=$(sudo cat /var/spool/cron/crontabs/root | grep autoswitch)
 if [[ -z "$entry" ]]; ## check if entry is empty
 then
-    echo "*/1 * * * * /bin/bash -c "/home/$USER/.batteryswitch/autoswitch.sh $percentage"" >> /tmp/crontab
+    echo "*/1 * * * * /bin/bash "/home/$USER/.batteryswitch/autoswitch.sh $percentage"" >> /tmp/crontab
     sudo crontab /tmp/crontab
     rm /tmp/crontab
     sleep 1
