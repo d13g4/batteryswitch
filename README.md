@@ -3,9 +3,13 @@ small hacked script to switch discharging batterys on tinkpads running linux
 
 
 
+# Known Issues
+* Internal Battery only discharged until 20% (when external was empty). Not sure if Notebook shut down on its own or its the fault of batteryswitch
 
 # TODO
 * implementing a counter to discharge external battery every 20th time or so, so that the statistics are still working 
+---
+
 * getting state from tpacpi-bat to reduce writings every minute - Done!
 * writing a setup.sh - Done!
 
